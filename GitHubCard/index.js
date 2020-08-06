@@ -9,9 +9,13 @@ import axios from 'axios'
 axios.get('https://api.github.com/users/davidgoldcode')
   .then(response => {
     debugger
+    const myProf = gitCreate(response.data);
+    const cards = document.querySelector('.cards')
+    cards.appendChild(myProf)
   })
   .catch(error => {
     debugger
+    return error;
   })
 
 /*
@@ -38,7 +42,22 @@ axios.get('https://api.github.com/users/davidgoldcode')
     user, and adding that card to the DOM.
 */
 
-const followersArray = [];
+
+const followersArray = [{'login': 'boahs'}, {'login': 'zachschultz'}, {'login': 'HenryRDavis'}, {'login': 'TBau23'}, {'login': 'devbeau',}];
+followersArray.forEach(userName => {
+  axios.get(`https://api.github.com/users/${userName.login}`)
+  .then(response => {
+    debugger
+    const cards = document.querySelector('.cards')
+    const myProf = gitCreate(response.data);
+    cards.appendChild(myProf)
+})
+  .catch(error => {
+    debugger
+    return error;
+})
+
+})
 
 /*
   STEP 3: Create a function that accepts a single object as its only argument.
@@ -69,26 +88,47 @@ function gitCreate(gitObj) {
   const bodyText = document.createElement('h3') 
   const paragraphOne = document.createElement('p') 
   const paragraphTwo = document.createElement('p')
-  const paragraphThree = document.createElement('p') // append anchor 
+  const paragraphThree = document.createElement('p')  
   const paragraphFour = document.createElement('p') 
   const paragraphFive = document.createElement('p') 
-  const paragraphSix = document.createElement('p') // add text & users bio
+  const paragraphSix = document.createElement('p') 
+  const anchor = document.createElement('a')
 
   //add classes, attributes, etc
   div.classList.add('card')
   img.setAttribute('src', gitObj.avatar_url)
   divTwo.classList.add('card-info')
   bodyText.classList.add('name')
-  bodyText.textContent = gitObj.name
+  bodyText.textContent = `Users Name: ${gitObj.name}`
   paragraphOne.textContent = gitObj.login
   paragraphTwo.textContent = `Location:  ${gitObj.location}`
   paragraphThree.textContent = 'Profile: '
   paragraphFour.textContent = `Followers:  ${gitObj.followers}`
   paragraphFive.textContent = `Followers:  ${gitObj.following}`
   paragraphSix.textContent = `Bio:  ${gitObj.bio}`
+  anchor.setAttribute('href', gitObj.url)
+  anchor.textContent = gitObj.url
+  
 
+  //create hierarchy 
+  div.appendChild(img)
+  div.appendChild(divTwo)
+  divTwo.appendChild(bodyText)
+  divTwo.appendChild(paragraphOne)
+  divTwo.appendChild(paragraphOne)
+  divTwo.appendChild(paragraphTwo)
+  divTwo.appendChild(paragraphThree)
+  divTwo.appendChild(paragraphFour)
+  divTwo.appendChild(paragraphFive)
+  divTwo.appendChild(paragraphSix)
+  paragraphThree.appendChild(anchor)
+  debugger
 
+  return div
 }
+
+// console.log(gitCreate())
+
 
 /*
   List of LS Instructors Github username's:
