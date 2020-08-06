@@ -1,8 +1,18 @@
+import axios from 'axios'
+
 /*
   STEP 1: using axios, send a GET request to the following URL
     (replacing the placeholder with your Github name):
     https://api.github.com/users/<your name>
 */
+
+axios.get('https://api.github.com/users/davidgoldcode')
+  .then(response => {
+    debugger
+  })
+  .catch(error => {
+    debugger
+  })
 
 /*
   STEP 2: Inspect and study the data coming back, this is YOUR
@@ -49,6 +59,36 @@ const followersArray = [];
       </div>
     </div>
 */
+
+function gitCreate(gitObj) {
+
+  // create variable
+  const div = document.createElement('div'); 
+  const img = document.createElement('img'); 
+  const divTwo = document.createElement('div');
+  const bodyText = document.createElement('h3') 
+  const paragraphOne = document.createElement('p') 
+  const paragraphTwo = document.createElement('p')
+  const paragraphThree = document.createElement('p') // append anchor 
+  const paragraphFour = document.createElement('p') 
+  const paragraphFive = document.createElement('p') 
+  const paragraphSix = document.createElement('p') // add text & users bio
+
+  //add classes, attributes, etc
+  div.classList.add('card')
+  img.setAttribute('src', gitObj.avatar_url)
+  divTwo.classList.add('card-info')
+  bodyText.classList.add('name')
+  bodyText.textContent = gitObj.name
+  paragraphOne.textContent = gitObj.login
+  paragraphTwo.textContent = `Location:  ${gitObj.location}`
+  paragraphThree.textContent = 'Profile: '
+  paragraphFour.textContent = `Followers:  ${gitObj.followers}`
+  paragraphFive.textContent = `Followers:  ${gitObj.following}`
+  paragraphSix.textContent = `Bio:  ${gitObj.bio}`
+
+
+}
 
 /*
   List of LS Instructors Github username's:
