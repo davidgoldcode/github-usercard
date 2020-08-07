@@ -5,12 +5,12 @@ import axios from 'axios'
     (replacing the placeholder with your Github name):
     https://api.github.com/users/<your name>
 */
+const cards = document.querySelector('.cards')
 
 axios.get('https://api.github.com/users/davidgoldcode')
   .then(response => {
     debugger
     const myProf = gitCreate(response.data);
-    const cards = document.querySelector('.cards')
     cards.appendChild(myProf)
   })
   .catch(error => {
@@ -48,7 +48,6 @@ followersArray.forEach(userName => {
   axios.get(`https://api.github.com/users/${userName.login}`)
   .then(response => {
     debugger
-    const cards = document.querySelector('.cards')
     const myProf = gitCreate(response.data);
     cards.appendChild(myProf)
 })
@@ -85,7 +84,7 @@ function gitCreate(gitObj) {
   const div = document.createElement('div'); 
   const img = document.createElement('img'); 
   const divTwo = document.createElement('div');
-  const bodyText = document.createElement('h3') 
+  const userTitle = document.createElement('h3') 
   const paragraphOne = document.createElement('p') 
   const paragraphTwo = document.createElement('p')
   const paragraphThree = document.createElement('p')  
@@ -98,8 +97,8 @@ function gitCreate(gitObj) {
   div.classList.add('card')
   img.setAttribute('src', gitObj.avatar_url)
   divTwo.classList.add('card-info')
-  bodyText.classList.add('name')
-  bodyText.textContent = `Users Name: ${gitObj.name}`
+  userTitle.classList.add('name')
+  userTitle.textContent = `Username: ${gitObj.name}`
   paragraphOne.textContent = gitObj.login
   paragraphTwo.textContent = `Location:  ${gitObj.location}`
   paragraphThree.textContent = 'Profile: '
@@ -113,7 +112,7 @@ function gitCreate(gitObj) {
   //create hierarchy 
   div.appendChild(img)
   div.appendChild(divTwo)
-  divTwo.appendChild(bodyText)
+  divTwo.appendChild(userTitle)
   divTwo.appendChild(paragraphOne)
   divTwo.appendChild(paragraphOne)
   divTwo.appendChild(paragraphTwo)
@@ -138,3 +137,31 @@ function gitCreate(gitObj) {
     luishrd
     bigknell
 */
+
+// Stretch 1 - Instead of manually creating a list of followers, do it programmatically. Create a function that requests the followers data from the API after it has received your data and create a card for each of your followers. Hint: you can chain promises.
+
+// axios.get('https://api.github.com/users/davidgoldcode/followers')
+//   .then(response => {
+//     let arr = Array.from(response.data)
+//     const arrList = arr.filter(function(item, index) {
+//       return item.url;
+//     }) 
+//     arrList.forEach(function(item) {
+//       axios.get(`${item.url}`)
+//         .then(response => {
+//           debugger
+//           const myProf = gitCreate(response.data);
+//           cards.appendChild(myProf)
+//         .catch(error => {
+//           console.log(`second error`, error)
+//         })
+//         })
+//     })      
+//   }) 
+//   .catch(error => {
+//     console.log(`you messed up`, error)
+//   })
+
+
+
+
